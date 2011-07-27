@@ -1,7 +1,7 @@
 --- #YAML:1.0
 name:               RTMP-Client
-version:            0.01
-abstract:           Very Simle RTMP client
+version:            0.02
+abstract:           A Simple RTMP client
 author:
     - ChenGang <yikuyiku.com@gmail.com>
 license:            unknown

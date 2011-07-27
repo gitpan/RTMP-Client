@@ -6,7 +6,7 @@ use Time::HiRes qw(gettimeofday);
 use 5.008008;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 require Exporter;
 our @ISA = qw(Exporter);
@@ -16,7 +16,7 @@ our $debug_flag = 0;
 
 =head1 NAME
 
-RTMP::Client - Very Simle RTMP client
+RTMP::Client - A Simple RTMP client
 
 =head1 SYNOPSIS
 
@@ -167,6 +167,52 @@ sub rtmp_call
     return $string;
 
 }
+
+
+=head1 EXAMPLES
+
+    use RTMP::Client qw(rtmp_connect rtmp_play rtmp_call);
+
+Speed Detection
+
+report download speed every 5 secs.
+
+    print "connect success\n" if rtmp_connect('192.168.1.1', '1935', 'live/23');
+    my $report_time = 5;
+    rtmp_play('MainB_1', '-1.0', '-1.0', $report_time, \&speed_detector);
+    sub speed_detector
+    {
+        my $rev_length = shift;
+        my $speed = $rev_length / 1024 / $report_time;
+        if ($speed > 3)
+        {
+            my $cur_time = strftime("%F_%T", localtime);
+            print $cur_time, "\t", $speed, "\tKbytes/s\n";
+        }
+        else
+        {
+            print "too slow !\n";
+        }
+    }
+
+    
+Save to File
+
+do things like "rtmpdump".L<http://rtmpdump.mplayerhq.hu/>
+
+    print "connect success\n" if rtmp_connect('192.168.1.1', '1935', 'live/23');
+    my $loop_time = 10;
+    rtmp_play('MainB_1', '-1.0', '-1.0', $report_time, \&save_to_file);
+    sub save_to_file
+    {
+        my $rev_length = shift;
+        my $rev_binary = shift;
+        open my $fh,">>","/root/rtmp_dump.bin";
+        binmode $fh;
+        print $fh $rev_binary;
+        close $fh;
+    }
+
 
 =head1 SOME INTERNAL METHODS
 
@@ -1096,60 +1142,21 @@ sub analysis_rtmp_msg
 }
 
 
-=head1 EXAMPLES
-
-    use RTMP::Client qw(rtmp_connect rtmp_play rtmp_call);
-
-Speed Detection
-
-report download speed every 5 secs.
-
-    print "connect success\n" if rtmp_connect('192.168.1.1', '1935', 'live/23');
-    my $report_time = 5;
-    rtmp_play('MainB_1', '-1.0', '-1.0', $report_time, \&speed_detector);
-    sub speed_detector
-    {
-        my $rev_length = shift;
-        my $speed = $rev_length / 1024 / $report_time;
-        if ($speed > 3)
-        {
-            my $cur_time = strftime("%F_%T", localtime);
-            print $cur_time, "\t", $speed, "\tKbytes/s\n";
-        }
-        else
-        {
-            print "too slow !\n";
-        }
-    }
-
-    
-Save to File
-
-do things like "rtmpdump".L<http://rtmpdump.mplayerhq.hu/>
-
-    print "connect success\n" if rtmp_connect('192.168.1.1', '1935', 'live/23');
-    my $loop_time = 10;
-    rtmp_play('MainB_1', '-1.0', '-1.0', $report_time, \&save_to_file);
-    sub save_to_file
-    {
-        my $rev_length = shift;
-        my $rev_binary = shift;
-        open my $fh,">>","/root/rtmp_dump.bin";
-        binmode $fh;
-        print $fh $rev_binary;
-        close $fh;
-    }
-
-
 =head1 AUTHOR
 
 Written by ChenGang, yikuyiku.com@gmail.com
+L<http://blog.yikuyiku.com/>
 
 
 =head1 COPYRIGHT
 
-Copyright (c) 2011 ChenGang. This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+Copyright (c) 2011 ChenGang.
 
-=cut
+This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+
+
+=head1 SEE ALSO
+
+L<Kamaitachi>
 
 1;
