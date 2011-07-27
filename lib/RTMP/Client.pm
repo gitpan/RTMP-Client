@@ -6,7 +6,7 @@ use Time::HiRes qw(gettimeofday);
 use 5.008008;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 require Exporter;
 our @ISA = qw(Exporter);
@@ -1158,5 +1158,7 @@ This library is free software; you can redistribute it and/or modify it under th
 =head1 SEE ALSO
 
 L<Kamaitachi>
+
+=cut
 
 1;
