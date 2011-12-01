@@ -6,7 +6,7 @@ use Time::HiRes qw(gettimeofday);
 use 5.008008;
 use warnings;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 require Exporter;
 our @ISA = qw(Exporter);
@@ -1103,14 +1103,15 @@ print colorful strings
 sub dprint
 {
     my ($string, $indent, $front_color, $back_color) = @_;
-    $front_color = 39 unless $front_color; # accept: 30-39
-    $back_color = 40 unless $back_color; # accept: 40-49
-    $color="\\033[$front_color;$back_color"."m";
-    $endstyle="\\033[0m";
-    $content = "\"".$color.$string.$endstyle."\"";
+    #$front_color = 39 unless $front_color; # accept: 30-39
+    #$back_color = 40 unless $back_color; # accept: 40-49
+    #$color="\\033[$front_color;$back_color"."m";
+    #$endstyle="\\033[0m";
+    #$content = "\"".$color.$string.$endstyle."\"";
     print '-' x $indent, "> " if $debug_flag;
-    my $cmd = "echo $content\n";
-    system $cmd if $debug_flag;
+	print $string,"\n";
+    #my $cmd = "echo $content\n";
+    #system $cmd if $debug_flag;
 }
 
 =head2 analysis_rtmp_msg($msg_type, $msg)

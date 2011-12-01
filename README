@@ -1,4 +1,4 @@
-RTMP-Client version 0.03
+RTMP-Client version 0.04
 ========================
 
 This is a simple RTMP client without video or audio decode. It

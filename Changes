@@ -9,3 +9,6 @@ Revision history for Perl extension RTMP::Client.
 
 0.03  Wed Jul 27 10:17:02 2011
 	- fix some bugs in document
+
+0.04  Thu Dec  1 16:55:54 2011
+	- fix security problem (thx to James Marshall james@jmarshall.com)
